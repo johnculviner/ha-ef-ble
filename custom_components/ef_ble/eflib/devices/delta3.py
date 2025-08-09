@@ -119,6 +119,11 @@ class Device(DeviceBase, ProtobufProps):
     )
     dc_charging_current_max = _DcChargingMaxField(pd335_sys_pb2.PV_CHG_VOL_SPEC_12V)
 
+    # Energy strategy operation modes
+    energy_strategy_self_powered = pb_field(pb.energy_strategy_operate_mode, lambda x: x.operate_self_powered_open if x else None)
+    energy_strategy_scheduled = pb_field(pb.energy_strategy_operate_mode, lambda x: x.operate_scheduled_open if x else None)  
+    energy_strategy_tou = pb_field(pb.energy_strategy_operate_mode, lambda x: x.operate_tou_mode_open if x else None)
+
     def __init__(
         self, ble_dev: BLEDevice, adv_data: AdvertisementData, sn: str
     ) -> None:
@@ -268,3 +273,18 @@ class Device(DeviceBase, ProtobufProps):
 
         await self._send_config_packet(config)
         return True
+
+    async def enable_energy_strategy_self_powered(self, enabled: bool):
+        config = pd335_sys_pb2.ConfigWrite()
+        config.cfg_energy_strategy_operate_mode.operate_self_powered_open = enabled
+        await self._send_config_packet(config)
+
+    async def enable_energy_strategy_scheduled(self, enabled: bool):
+        config = pd335_sys_pb2.ConfigWrite()
+        config.cfg_energy_strategy_operate_mode.operate_scheduled_open = enabled
+        await self._send_config_packet(config)
+
+    async def enable_energy_strategy_tou(self, enabled: bool):
+        config = pd335_sys_pb2.ConfigWrite()
+        config.cfg_energy_strategy_operate_mode.operate_tou_mode_open = enabled
+        await self._send_config_packet(config)

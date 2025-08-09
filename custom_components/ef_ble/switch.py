@@ -44,6 +44,24 @@ SWITCH_TYPES = [
         name="USB Ports",
         icon="mdi:usb",
     ),
+    SwitchEntityDescription(
+        key="energy_strategy_self_powered",
+        name="Self-Powered Mode",
+        device_class=SwitchDeviceClass.SWITCH,
+        icon="mdi:solar-power",
+    ),
+    SwitchEntityDescription(
+        key="energy_strategy_scheduled",
+        name="Scheduled Mode",
+        device_class=SwitchDeviceClass.SWITCH,
+        icon="mdi:calendar-clock",
+    ),
+    SwitchEntityDescription(
+        key="energy_strategy_tou",
+        name="Time-of-Use Mode",
+        device_class=SwitchDeviceClass.SWITCH,
+        icon="mdi:clock-time-eight",
+    ),
 ]
 
 
