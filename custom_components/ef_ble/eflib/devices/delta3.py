@@ -15,13 +15,16 @@ class Device(delta3_classic.Device):
 
     # Energy strategy operation modes
     energy_strategy_self_powered = pb_field(
-        pb.energy_strategy_operate_mode, lambda x: x.operate_self_powered_open if x else None
+        pb.energy_strategy_operate_mode,
+        lambda x: x.operate_self_powered_open if x else None,
     )
     energy_strategy_scheduled = pb_field(
-        pb.energy_strategy_operate_mode, lambda x: x.operate_scheduled_open if x else None
+        pb.energy_strategy_operate_mode,
+        lambda x: x.operate_scheduled_open if x else None,
     )
     energy_strategy_tou = pb_field(
-        pb.energy_strategy_operate_mode, lambda x: x.operate_tou_mode_open if x else None
+        pb.energy_strategy_operate_mode,
+        lambda x: x.operate_tou_mode_open if x else None,
     )
 
     async def enable_usb_ports(self, enabled: bool):
