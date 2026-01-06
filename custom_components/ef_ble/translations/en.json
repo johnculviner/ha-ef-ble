@@ -3,7 +3,7 @@
     "abort": {
       "already_configured": "Device is already configured",
       "not_supported": "Device is not supported",
-      "no_devices_found": "No supported EcoFlow devices found",
+      "no_devices_found": "No supported EcoFlow devices found. Make sure your device is not connected to the EcoFlow app via Bluetooth.",
       "reconfigure_successful": "Reconfiguration was successful"
     },
     "error": {
@@ -36,7 +36,8 @@
             "name": "EcoFlow Login (skip if you already know your user ID)",
             "data": {
               "email": "Email",
-              "password": "Password"
+              "password": "Password",
+              "region": "Region (try different region if you get 'Account does not exist' or 'user ID may be incorrect' error)"
             }
           },
           "log_options": {
@@ -71,7 +72,8 @@
             "name": "EcoFlow Login (skip if you already know your user ID)",
             "data": {
               "email": "Email",
-              "password": "Password"
+              "password": "Password",
+              "region": "Region (try different region if you get 'Account does not exist' or 'user ID may be incorrect' error)"
             }
           },
           "log_options": {
@@ -160,6 +162,41 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "channel_backup_is_ready": {
+        "name": "Channel {channel} Backup Ready"
+      },
+      "channel_is_enabled": {
+        "name": "Channel {channel} Enabled"
+      },
+      "channel_is_connected": {
+        "name": "Channel {channel} Connected"
+      },
+      "channel_is_ac_open": {
+        "name": "Channel {channel} AC Output"
+      },
+      "channel_is_power_output": {
+        "name": "Channel {channel} Power Output"
+      },
+      "channel_is_grid_charge": {
+        "name": "Channel {channel} Grid Charging"
+      },
+      "channel_is_mppt_charge": {
+        "name": "Channel {channel} Solar Charging"
+      },
+      "channel_ems_charging": {
+        "name": "Channel {channel} EMS Charging"
+      },
+      "channel_hw_connected": {
+        "name": "Channel {channel} Hardware Connected"
+      },
+      "error_happened": {
+        "name": "Error"
+      },
+      "plugged_in_ac": {
+        "name": "AC Plugged In"
+      }
+    },
     "sensor": {
       "battery_level": {
         "name": "Battery Level"
@@ -230,6 +267,12 @@
       "dc12v_output_energy": {
         "name": "DC 12V Output Energy"
       },
+      "dc12v_output_current": {
+        "name": "DC 12V Output Current"
+      },
+      "dc12v_output_voltage": {
+        "name": "DC 12V Output Voltage"
+      },
       "usbc_output_power": {
         "name": "USB C Output Power"
       },
@@ -299,11 +342,240 @@
       "dc_hv_input_power": {
         "name": "LV DC Port Input Power"
       },
-      "dc_lv_state": {
+      "dc_lv_input_state": {
         "name": "LV DC Input Port State"
       },
-      "dc_hv_state": {
+      "dc_hv_input_state": {
         "name": "HV DC Input Port State"
+      },
+      "engine_state": {
+        "name": "Engine State",
+        "state": {
+          "closed": "Off",
+          "opened": "Running",
+          "closing": "Stopping"
+        }
+      },
+      "xt150_battery_level": {
+        "name": "XT150 Battery Level"
+      },
+      "xt150_charge_type": {
+        "name": "XT150 Charge Type"
+      },
+      "liquefied_gas_type": {
+        "name": "Liquefied Gas Type"
+      },
+      "liquefied_gas": {
+        "name": "Liquefied Gas"
+      },
+      "liquefied_gas_consumption": {
+        "name": "Liquefied Gas Consumption per Hour"
+      },
+      "generator_total_output": {
+        "name": "Generator Total Output"
+      },
+      "generator_abnormal_state": {
+        "name": "Abnormal State",
+        "state": {
+          "no": "No",
+          "gasoline_low": "Gasoline Low"
+        }
+      },
+      "sub_battery_soc": {
+        "name": "Internal Battery Level"
+      },
+      "sub_battery_power": {
+        "name": "Internal Battery Power"
+      },
+      "sub_battery_state": {
+        "name": "Internal Battery State",
+        "state": {
+          "idle": "Idle",
+          "no_input": "No Input",
+          "discharging": "Discharging",
+          "charging": "Charging",
+          "normal_full": "Full",
+          "normal_low_pressure": "Normal Low Pressure"
+        }
+      },
+      "fuel_type": {
+        "name": "Fuel Type"
+      },
+      "battery_temperature": {
+        "name": "Battery Temperature"
+      },
+      "car_battery_voltage": {
+        "name": "Battery Voltage"
+      },
+      "dc_power": {
+        "name": "DC Power"
+      },
+      "load_from_battery": {
+        "name": "Load From Battery"
+      },
+      "load_from_grid": {
+        "name": "Load From Grid"
+      },
+      "load_from_pv": {
+        "name": "Load From PV"
+      },
+      "grid_voltage": {
+        "name": "Grid Voltage"
+      },
+      "grid_frequency": {
+        "name": "Grid Frequency"
+      },
+      "backup_is_ready": {
+        "name": "Channel {channel} Backup Ready"
+      },
+      "backup_ctrl_status": {
+        "name": "Channel {channel} Control Status",
+        "state": {
+          "off": "Off",
+          "discharge": "Discharging",
+          "charge": "Charging",
+          "emergency_stop": "Emergency Stop",
+          "standby": "Standby"
+        }
+      },
+      "backup_force_charge": {
+        "name": "Channel {channel} Force Charge",
+        "state": {
+          "off": "Off",
+          "on": "On"
+        }
+      },
+      "backup_relay1_count": {
+        "name": "Channel {channel} Relay 1 Count"
+      },
+      "backup_relay2_count": {
+        "name": "Channel {channel} Relay 2 Count"
+      },
+      "backup_wakeup_charge": {
+        "name": "Channel {channel} Wakeup Charge Level"
+      },
+      "backup_connector_type": {
+        "name": "Channel {channel} Connector Type"
+      },
+      "channel_serial_number": {
+        "name": "Channel {channel} Serial Number"
+      },
+      "channel_device_type": {
+        "name": "Channel {channel} Device Type"
+      },
+      "channel_full_capacity": {
+        "name": "Channel {channel} Full Capacity"
+      },
+      "channel_rated_power": {
+        "name": "Channel {channel} Rated Power"
+      },
+      "channel_battery_level": {
+        "name": "Channel {channel} Battery Level"
+      },
+      "channel_output_power": {
+        "name": "Channel {channel} Output Power"
+      },
+      "channel_battery_temperature": {
+        "name": "Channel {channel} Battery Temperature"
+      },
+      "channel_lcd_input_power": {
+        "name": "Channel {channel} LCD Input Power"
+      },
+      "channel_pv_status": {
+        "name": "Channel {channel} PV Status",
+        "state": {
+          "none": "None",
+          "lv": "LV",
+          "hv": "HV",
+          "lv_and_hv": "LV&HV"
+        }
+      },
+      "channel_pv_lv_input_power": {
+        "name": "Channel {channel} PV LV Input Power"
+      },
+      "channel_pv_hv_input_power": {
+        "name": "Channel {channel} PV HV Input Power"
+      },
+      "channel_error_count": {
+        "name": "Channel {channel} Error Count"
+      },
+      "ambient_temperature": {
+        "name": "Temperature"
+      },
+      "ambient_humidity": {
+        "name": "Humidity"
+      },
+      "operating_mode": {
+        "name": "Operating Mode"
+      },
+      "condensate_water_level": {
+        "name": "Water Level"
+      },
+      "pcs_fan_level": {
+        "name": "Fan Level"
+      },
+      "in_drainage": {
+        "name": "In Drainage"
+      },
+      "drainage_mode": {
+        "name": "Drainage Mode"
+      },
+      "lcd_show_temp_type": {
+        "name": "Display Temperature Type"
+      },
+      "temp_indoor_supply_air": {
+        "name": "Indoor Supply Air Temp"
+      },
+      "temp_indoor_return_air": {
+        "name": "Indoor Return Air Temp"
+      },
+      "temp_outdoor_ambient": {
+        "name": "Outdoor Ambient Temp"
+      },
+      "temp_condenser": {
+        "name": "Condenser Temperature"
+      },
+      "temp_evaporator": {
+        "name": "Evaporator Temperature"
+      },
+      "temp_compressor_discharge": {
+        "name": "Compressor Discharge Temp"
+      },
+      "battery_charge_limit_min": {
+        "name": "Discharge Limit"
+      },
+      "battery_charge_limit_max": {
+        "name": "Charge Limit"
+      },
+      "sleep_state": {
+        "name": "Sleep State"
+      },
+      "power": {
+        "name": "Power"
+      }
+
+    },
+    "select": {
+      "led_mode": {
+        "name": "LED"
+      },
+      "dc_charging_type": {
+        "name": "DC Charging Type"
+      },
+      "performance_mode": {
+        "name": "Performance Mode"
+      },
+      "liquefied_gas_unit": {
+        "name": "Gas Unit"
+      },
+      "charger_mode": {
+        "name": "Charger Mode",
+        "state": {
+          "idle": "Idle",
+          "charge": "Charge",
+          "reverse_charge": "Reverse Charge",
+          "battery_maintenance": "Battery Maintenance"
+        }
       }
     }
   }

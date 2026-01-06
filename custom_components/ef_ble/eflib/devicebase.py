@@ -13,10 +13,14 @@ from .logging_util import DeviceLogger, LogOptions
 from .packet import Packet
 
 
-class DeviceBase:
+class DeviceBase(abc.ABC):
     """Device Base"""
 
     MANUFACTURER_KEY = 0xB5B5
+
+    @classmethod
+    @abc.abstractmethod
+    def check(cls, sn: bytes) -> bool: ...
 
     def __init__(
         self, ble_dev: BLEDevice, adv_data: AdvertisementData, sn: str
@@ -67,12 +71,21 @@ class DeviceBase:
     def name_by_user(self):
         return self._name_by_user
 
+    @property
+    def serial_number(self):
+        """Full device serial number parsed from manufacturer data."""
+        return self._sn
+
     def isValid(self):
-        return self._sn != None
+        return self._sn is not None
 
     @property
     def is_connected(self) -> bool:
-        return self._conn != None and self._conn.is_connected
+        return self._conn is not None and self._conn.is_connected
+
+    @property
+    def packet_version(self) -> int:
+        return 0x03
 
     @property
     def connection_state(self):
@@ -116,6 +129,7 @@ class DeviceBase:
                     user_id,
                     self.data_parse,
                     self.packet_parse,
+                    packet_version=self.packet_version,
                 )
                 .with_logging_options(self._logger.options)
                 .with_disabled_reconnect(self._reconnect_disabled)
@@ -126,7 +140,7 @@ class DeviceBase:
                 for callback in self._disconnect_listeners:
                     callback(exc)
 
-            self._conn.on_disconnect(_disconnect_callback)
+            self._conn.on_disconnect(listener=_disconnect_callback)
         elif self._conn._user_id != user_id:
             self._conn._user_id = user_id
 
